@@ -3,8 +3,28 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace：命名空间，用于隔离sql，还有一个很重要的作用，后面会讲 -->
+<!-- parametertype指的是传入的参数 -->
 <mapper namespace="test">
-<select id="findbyuserid" parameterType="int" resultType="bean.user">
-	select * from user where id = #{v}
-</select>
+<!-- 查询 -->
+	<select id="findbyuserid" parameterType="int" resultType="bean.user">	
+		select * from user where id = #{v}
+	</select>
+	<select id="findbyuser" parameterType="String" resultType="bean.user">
+		select * from user where name like "%"#{hehe}"%"
+	</select>	
+	<!-- 添加用户 -->
+	<insert id="insert" parameterType="bean.user">
+		<selectKey keyProperty="id" resultType="int" order="AFTER" > 
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into user(name,money) value (#{name},#{money});
+	</insert>
+	<!-- 修改 -->
+	<update id="updateuser" parameterType="bean.user">
+		update user set name=#{name},money=#{money} where id = #{id}
+	</update>
+	<!-- 删除 -->
+	<delete id="deletebyid" parameterType="int">
+		delete from user where id = #{v}
+	</delete>
 </mapper>
