@@ -27,4 +27,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deletebyid" parameterType="int">
 		delete from user where id = #{v}
 	</delete>
+	<select id="findbyQueryVo" parameterType="bean.QueryVo" resultType="bean.user">
+		select * from user where name like "%"#{u.name}"%"
+	</select>
+	<resultMap type="bean.user" id="users">
+		<id column="id" property="id"/>
+		<!-- column指的是数据库中的列名，而property指的是bean中对应的字段名 -->
+		<result column="dataname" property="beanname"/>
+	</resultMap>
+	<select id="findbyuser1" parameterType="String" resultMap="users">
+		select * from user where name like "%"#{hehe}"%"
+	</select>
+	<select id="findbynameandmoney" parameterType="bean.user" resultType="bean.user">
+		select * from user
+		<where>
+		<if test="money != null and money !=''">
+			money = #{money}
+		</if>
+		<if test="name != null and name != ''">
+			and name = #{name}
+		</if>
+		</where>
+	</select>
+	<select id="findbyids" parameterType="bean.QueryVo" resultType="bean.user">
+		select * from user
+		<where>
+		<foreach collection="list" item = "id" separator="," open="id in (" close=")">
+			#{id}
+		</foreach>
+		</where>
+	</select>
 </mapper>
