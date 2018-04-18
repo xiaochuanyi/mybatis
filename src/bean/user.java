@@ -1,9 +1,19 @@
 package bean;
 
+import java.util.List;
+
 public class user {
 	private int id;
 	private String name;
 	private String money;
+	private List<Order> list ;
+	
+	public List<Order> getList() {
+		return list;
+	}
+	public void setList(List<Order> list) {
+		this.list = list;
+	}
 	public int getId() {
 		return id;
 	}

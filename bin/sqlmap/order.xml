@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ordermapper">
+	<resultMap type="bean.Order" id="order">
+	<result column="id" property="id"/>
+	<result column="name" property="name"/>
+	<result column="value" property="value"/>
+		<association property="user" javaType="bean.user">
+		<result column="id" property="id"/>
+		<result column="name" property="name"/>	
+		</association>
+	</resultMap>
+	<select id="selectorder" resultMap="order">
+		select
+		 o.id,o.name,
+		 o.value,
+		 u.name
+		  from orders as o LEFT JOIN user as u on o.id=u.id
+	</select>
+	
+	<select id="selectorders" resultMap="orders">
+		select
+		 o.id,o.name,
+		 o.value,
+		 u.name
+		  from  user as u LEFT JOIN orders as o on o.id=u.id
+	</select>
+	<resultMap type="bean.user" id="orders">
+		<result column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="money" property="money"/>
+		<collection property="list" ofType="bean.Order">
+			<result column="id" property="id"/>
+			<result column="name" property="name"/>
+			<result column="value" property="value"/>
+		</collection>
+	</resultMap>
+</mapper>
