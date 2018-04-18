@@ -11,9 +11,10 @@ public class SpringAndMybatis {
 	@Test
 	public void test1(){
 		ApplicationContext ac = new ClassPathXmlApplicationContext("/config/applicationContext.xml");
-		UserMapper us = (UserMapper)ac.getBean("userMapper");
-		user u = us.select(1);
-		System.out.println(u);
+		UserMapper u = ac.getBean(UserMapper.class);
+		//UserMapper us = (UserMapper)ac.getBean("userMapper");
+		user us = u.select(1);
+		System.out.println(us);
 	}
 	
 }
